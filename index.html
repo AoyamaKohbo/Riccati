@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="ja">
+
+  <head>
+    <script type="text/x-mathjax-config">
+
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+
+    </script>
+
+    <script type="text/javascript" async 
+
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+
+    </script>
+
+  </head>
+
+  <body>
+    <h3>Riccati(リカチ、リカッチ、リッカチ)方程式の解によるカルマンゲインの定式化</h3>
+    <p>Riccati方程式の解を用いたカルマンゲインの計算方法について記述します。まず、Riccati方程式を導きます。</p>
+    <p><a href="https://aoyamakohbo.github.io/KalmanFltr/">定常カルマンフィルタ</a>のカルマンゲインは次式により計算されます。</p>
+    \begin{align}
+      \mathbf{K}(n)\mathbf{V}&=~\mathbf{X}(n)\mathbf{C}^T\label{eq:Mat_K}\\
+      \mathbf{X}(n)&=~(\mathbf{I}-\mathbf{K}(n)\mathbf{C})\mathbf{Z}(n)(\mathbf{I}-\mathbf{K}(n)\mathbf{C})^T+\mathbf{K}(n)\mathbf{V}\mathbf{K}(n)^T \label{eq:MatP1}\\
+      \mathbf{Z}(n+1)&=~\mathbf{A}\mathbf{X}(n)\mathbf{A}^T+\mathbf{W} \label{eq:Mat_Z}\\
+      \mathbf{X}(n)&=~(\mathbf{I}-\mathbf{K}(n)\mathbf{C})\mathbf{Z}(n) \label{eq:MatP3}
+    \end{align}
+
+    <p>式\eqref{eq:Mat_K}より次式が得られます。</p>
+      \begin{align}
+        {\mathbf K}(n){\mathbf V}{\mathbf K}(n)^T&=~{\mathbf K}(n){\mathbf V}{\mathbf V}^{-1}{\mathbf V}{\mathbf K}(n)^T\nonumber\\
+       &=~{\mathbf X}(n){\mathbf C}^T{\mathbf V}^{-1}{\mathbf C}{\mathbf X}(n)^T\label{eq:Mat_X2}
+      \end{align}
+
+    <p>式\eqref{eq:MatP3}、\eqref{eq:Mat_X2}を考慮して、式\eqref{eq:MatP1}を次式のように変形します。</p>
+    \begin{align}
+      {\mathbf X}(n)&=~\{{\mathbf I}-{\mathbf K}(n){\mathbf C}\}{\mathbf Z}(n){\mathbf Z}(n)^{-1}{\mathbf Z}(n)\{{\mathbf I}-{\mathbf K}(n){\mathbf C}\}^T+{\mathbf K}(n){\mathbf V}{\mathbf K}(n)^T\nonumber\\
+      &=~{\mathbf X}(n){\mathbf Z}(n)^{-1}{\mathbf X}(n)+{\mathbf X}(n){\mathbf C}^T{\mathbf V}^{-1}{\mathbf C}{\mathbf X}(n)\nonumber\\
+      &=~{\mathbf X}(n)\{{\mathbf Z}(n)^{-1}+{\mathbf C}^T{\mathbf V}^{-1}{\mathbf C}\}{\mathbf X}(n)\nonumber
+    \end{align}
+
+    <p>両辺の逆数をとります。</p>
+      \begin{align}
+      {\mathbf X}(n)=\{{\mathbf Z}(n)^{-1}+{\mathbf C}^T{\mathbf V}^{-1}{\mathbf C}\}^{-1}\label{eq:MatP4}
+      \end{align}
+
+    <p>式\eqref{eq:MatP4}の右辺に逆行列補題 : \(({\mathbf A}+{\mathbf B}{\mathbf C})^{-1}={\mathbf A}^{-1}-{\mathbf A}^{-1}{\mathbf B}({\mathbf I}+{\mathbf C}{\mathbf A}^{-1}{\mathbf B})^{-1}{\mathbf C}{\mathbf A}^{-1}\)
+      を適用することにより、式\eqref{eq:MatP4}は次式となります。</p>
+      \begin{align}
+      {\mathbf X}(n)={\mathbf Z}(n)-{\mathbf Z}(n){\mathbf C}^T({\mathbf C}{\mathbf Z}{\mathbf C}^T+{\mathbf V})^{-1}{\mathbf C}{\mathbf Z}(n)\label{eq:MatP7}
+      \end{align}
+
+    <p>さらに、式\eqref{eq:MatP7}の左から\({\mathbf A}\)、右から\({\mathbf A}^T\)を乗ずることにより、式\eqref{eq:MatP7}を次式のように書き換えます。</p>
+    \begin{align}
+      {\mathbf A}{\mathbf X}(n){\mathbf A}^T+{\mathbf W}={\mathbf A}{\mathbf Z}(n){\mathbf A}^T-{\mathbf A}{\mathbf Z}(n){\mathbf C}^T({\mathbf C}{\mathbf Z}{\mathbf C}^T+{\mathbf V})^{-1}{\mathbf C}{\mathbf Z}(n){\mathbf A}^T+{\mathbf W}.\label{eq:MatP5}
+    \end{align}
+
+    <p>式\eqref{eq:MatP5}の左辺に式\eqref{eq:Mat_Z}を考慮することにより、次式のRiccati方程式が導かれます。</p>
+      \begin{align}
+      {\mathbf Z}(n+1)={\mathbf A}{\mathbf Z}(n){\mathbf A}^T-{\mathbf A}{\mathbf Z}(n){\mathbf C}^T({\mathbf C}{\mathbf Z}(n){\mathbf C}^T+{\mathbf V})^{-1}{\mathbf C}{\mathbf Z}(n){\mathbf A}^T+{\mathbf W}.\label{eq:MatP_A}
+      \end{align}
+
+    <p>次にRiccati方程式の解を用いたカルマンゲインの計算式について記述します。</p>
+    <p>式\eqref{eq:MatP3}を変形し、式\eqref{eq:MatP7}を考慮することにより次式が得られます。</p>
+    \begin{align}
+      {\mathbf K}(n){\mathbf C}{\mathbf Z}(n)={\mathbf Z}(n)-{\mathbf X}(n)={\mathbf Z}(n){\mathbf C}^T\{{\mathbf C}{\mathbf Z}(n){\mathbf C}^T+{\mathbf V}\}^{-1}{\mathbf C}{\mathbf Z}(n).
+      \end{align}
+
+    <p>したがって、次式が得られます。</p>
+    \begin{align}
+      [{\mathbf K}(n)-{\mathbf Z}(n){\mathbf C}^T\{{\mathbf C}{\mathbf Z}(n){\mathbf C}^T+{\mathbf V}\}^{-1}]{\mathbf C}{\mathbf Z}(n)={\mathbf O}.
+    \end{align}
+
+    <p>\({\mathbf C}{\mathbf Z}(n)\neq {\mathbf O}\)なので、Riccati方程式の解を用いたカルマンゲインの計算式は次式となります。</p>
+      \begin{align}
+      {\mathbf K}(n)={\mathbf Z}(n){\mathbf C}^T\{{\mathbf C}{\mathbf Z}(n){\mathbf C}^T+{\mathbf V}\}^{-1}.
+      \end{align}
+
+   <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
+</body>
+</html>
