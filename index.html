@@ -54,10 +54,10 @@
 
     <p>さらに、式\eqref{eq:MatP7}の左から\({\mathbf A}\)、右から\({\mathbf A}^T\)を乗ずることにより、式\eqref{eq:MatP7}を次式のように書き換えます。</p>
     \begin{align}
-      {\mathbf A}{\mathbf X}(n){\mathbf A}^T+{\mathbf W}={\mathbf A}{\mathbf Z}(n){\mathbf A}^T-{\mathbf A}{\mathbf Z}(n){\mathbf C}^T({\mathbf C}{\mathbf Z}{\mathbf C}^T+{\mathbf V})^{-1}{\mathbf C}{\mathbf Z}(n){\mathbf A}^T+{\mathbf W}.\label{eq:MatP5}
+      {\mathbf A}{\mathbf X}(n){\mathbf A}^T={\mathbf A}{\mathbf Z}(n){\mathbf A}^T-{\mathbf A}{\mathbf Z}(n){\mathbf C}^T({\mathbf C}{\mathbf Z}{\mathbf C}^T+{\mathbf V})^{-1}{\mathbf C}{\mathbf Z}(n){\mathbf A}^T.\label{eq:MatP5}
     \end{align}
 
-    <p>式\eqref{eq:MatP5}の左辺に式\eqref{eq:Mat_Z}を考慮することにより、次式のRiccati方程式が導かれます。</p>
+    <p>式\eqref{eq:Mat_Z}の右辺に式\eqref{eq:MatP5}を考慮することにより、次式のRiccati方程式が導かれます。</p>
       \begin{align}
       {\mathbf Z}(n+1)={\mathbf A}{\mathbf Z}(n){\mathbf A}^T-{\mathbf A}{\mathbf Z}(n){\mathbf C}^T({\mathbf C}{\mathbf Z}(n){\mathbf C}^T+{\mathbf V})^{-1}{\mathbf C}{\mathbf Z}(n){\mathbf A}^T+{\mathbf W}.\label{eq:MatP_A}
       \end{align}
